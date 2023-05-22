@@ -59,7 +59,9 @@ DEBUG_RESULTS_DIR = LOCAL_DATA_DIR / "debug/results"
 DEBUG_DATA_DIR = LOCAL_DATA_DIR / "debug_data"
 CACHE_DIR = LOCAL_DATA_DIR / "joblib_cache"
 
-assert LOCAL_DATA_DIR.exists()
+if not LOCAL_DATA_DIR.exists():
+    os.makedirs(LOCAL_DATA_DIR)
+
 EXP_DIR.mkdir(exist_ok=True)
 RESULTS_DIR.mkdir(exist_ok=True)
 DEBUG_DATA_DIR.mkdir(exist_ok=True)

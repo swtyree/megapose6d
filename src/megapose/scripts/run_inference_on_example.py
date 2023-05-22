@@ -126,7 +126,6 @@ def run_inference(
     example_dir: Path,
     model_name: str,
 ) -> None:
-
     model_info = NAMED_MODELS[model_name]
 
     observation = load_observation_tensor(
@@ -150,7 +149,6 @@ def run_inference(
 def make_output_visualization(
     example_dir: Path,
 ) -> None:
-
     rgb, _, camera_data = load_observation(example_dir, load_depth=False)
     camera_data.TWC = Transform(np.eye(4))
     object_datas = load_object_data(example_dir / "outputs" / "object_data.json")
@@ -216,6 +214,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     data_dir = os.getenv("MEGAPOSE_DATA_DIR")
+    if not data_dir:
+        import os
+
+        # assume you are running it at the root
+        data_dir = os.getcwd()
     assert data_dir
     example_dir = Path(data_dir) / "examples" / args.example_name
 
