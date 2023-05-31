@@ -44,7 +44,10 @@ def load_observation(
 
     depth = None
     if load_depth:
-        depth = np.array(Image.open(example_dir / "image_depth.png"), dtype=np.float32) / 1000
+        try:
+            depth = np.array(Image.open(example_dir / "image_depth.png"), dtype=np.float32) / 1000
+        except FileNotFoundError:
+            depth = np.load(example_dir / "depth_meters.npy")
         assert depth.shape[:2] == camera_data.resolution
 
     return rgb, depth, camera_data
